@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "outDir": "dist",
+        "lib": [
+            "es2015"
+        ]
+    },
+    "typeAcquisition": {
+      "enable": true
+    }
+}
