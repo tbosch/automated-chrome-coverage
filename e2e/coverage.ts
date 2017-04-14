@@ -28,9 +28,13 @@ Chrome(function (chrome: {Page: any, Runtime: any, Profiler: any, send: any, clo
             .then( () => console.log(`>>> Loaded ${url}`))
             .then( () => chrome.send('Profiler.takePreciseCoverage') )
             .then( (results: {result: CoverageEntry[]}) => {
-                const mainJsProfile = results.result.find(entry => entry.url.endsWith(script));
-                console.log(`>>> coverage for ${script}`);
-                console.log(mainJsProfile.functions.map(entry => JSON.stringify(entry)).join('\n'));
+                results.result.forEach(entry => {
+                  console.log(`>>> coverage for ${entry.url}`);
+                  console.log(entry.functions.map(data => JSON.stringify(data)).join('\n'))
+                });
+                // const mainJsProfile = results.result.find(entry => entry.url.endsWith(script));
+                // console.log(`>>> coverage for ${script}`);
+                // console.log(mainJsProfile.functions.map(entry => JSON.stringify(entry)).join('\n'));
             }).then( () => chrome.close());
     }
 ).on('error', function () {
