@@ -20,4 +20,14 @@ trap finish EXIT
 echo "Waiting for HTTP and chrome to start..."
 sleep 4
 
+rm -rf dist/coverage && mkdir dist/coverage
+
 node dist/e2e/coverage.js
+
+UGLIFYJS=`pwd`/node_modules/.bin/uglifyjs
+
+for file in dist/coverage/*.js; do
+  echo "${file}"
+  $UGLIFYJS -c --screw-ie8 -o ${file} ${file}
+done
+rsync -a --exclude=*.js dist/src/ dist/coverage
